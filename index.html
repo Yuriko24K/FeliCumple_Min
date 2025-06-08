@@ -14,34 +14,47 @@
       height: 100%;
     }
     body {
+      padding: 10px; /* margen para que no quede pegado a la pantalla */
       background-color: black;
       background-image: url('OlaMin.jpeg');
+      background-size: cover;         /* Escala para cubrir toda la pantalla */
+      background-position: center;    /* Centra la imagen */
       background-repeat: no-repeat;
-      background-position: center center;
-      background-size: contain; /* Se adapta manteniendo proporciones sin recortar */
-      background-attachment: fixed; /* La imagen no se mueve al hacer scroll */
+      background-attachment: fixed;   /* Evita que se mueva con scroll */
+      transition: background-image 0.8s ease;
       cursor: pointer;
+      height: 100vh; /* asegurar que ocupe toda la ventana */
     }
   </style>
 </head>
 <body>
 
-  <audio src="Musica.mpeg" autoplay loop></audio>
+<audio id="bgMusic" src="Musica.mpeg" preload="auto" loop></audio>
 
-  <script>
-    // Aquí el audio ya está en autoplay y loop
-    // Si quieres, puedes controlar el play con el clic:
+<script>
+  const images = [
+    'OlaMin.jpeg',
+    'Algo.jpeg',
+    'Mensaje.jpeg'
+  ];
 
-    const audio = document.querySelector('audio');
-    let audioStarted = false;
+  let index = 0;
+  let audioStarted = false;
+  const audio = document.getElementById('bgMusic');
 
-    document.body.addEventListener('click', () => {
-      if (!audioStarted) {
-        audio.play().catch(e => console.log('No se pudo reproducir audio:', e));
-        audioStarted = true;
-      }
-    });
-  </script>
+  document.body.addEventListener('click', () => {
+    if (!audioStarted) {
+      audio.play().catch(err => console.log('No se pudo reproducir el audio:', err));
+      audioStarted = true;
+    }
+
+    index++;
+    if (index >= images.length) {
+      index = 0; // para que las imágenes roten infinitamente
+    }
+    document.body.style.backgroundImage = `url('${images[index]}')`;
+  });
+</script>
 
 </body>
 </html>
