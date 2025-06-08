@@ -13,7 +13,7 @@
     html, body {
       width: 100%;
       height: 100%;
-      background-color: black; /* Fondo negro completo */
+      background-color: black; /* Fondo negro */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -21,13 +21,19 @@
     #imagen {
       max-width: 90%;
       max-height: 90vh;
+      object-fit: contain; /* Mostrar imagen completa sin recorte */
       border-radius: 20px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
       transition: opacity 0.5s ease;
+      outline: none; /* Quita el borde azul/foco */
+      user-select: none; /* Evita selección accidental */
+    }
+    body:focus {
+      outline: none; /* Quita foco azul al hacer clic */
     }
   </style>
 </head>
-<body>
+<body tabindex="0">
 
 <audio id="bgMusic" src="Musica.mpeg" preload="auto" loop></audio>
 <img id="imagen" src="OlaMin.jpeg" alt="Imagen principal" />
@@ -50,13 +56,15 @@
       audioStarted = true;
     }
 
-    // Cambiar imagen al hacer clic
-    index = (index + 1) % images.length;
-    imagen.style.opacity = 0; // efecto de desvanecimiento
-    setTimeout(() => {
-      imagen.src = images[index];
-      imagen.style.opacity = 1;
-    }, 300);
+    if (index < images.length - 1) {
+      index++;
+      imagen.style.opacity = 0;
+      setTimeout(() => {
+        imagen.src = images[index];
+        imagen.style.opacity = 1;
+      }, 300);
+    }
+    // Si ya es la última imagen, no cambia nada
   });
 </script>
 
