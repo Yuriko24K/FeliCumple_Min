@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Para Min</title>
   <style>
     * {
@@ -15,51 +15,30 @@
     }
     body {
       background-color: black;
-      /* Quité background-image porque vamos a poner la imagen en <img> */
-      transition: background-image 0.8s ease;
+      background-image: url('OlaMin.jpeg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain; /* Se adapta manteniendo proporciones sin recortar */
+      background-attachment: fixed; /* La imagen no se mueve al hacer scroll */
       cursor: pointer;
-      position: relative; /* para que los hijos con absolute se posicionen respecto a body */
-      overflow: hidden; /* opcional: para que no haya scroll si imagen se sale */
-    }
-
-    img.moved-image {
-      position: absolute;
-      top: 10px;     /* 10px desde arriba */
-      right: 10px;   /* 10px desde derecha */
-      width: 200px;  /* tamaño ajustable */
-      margin: 0;     /* elimina margen */
-      border-radius: 8px; /* opcional, para bordes redondeados */
-      box-shadow: 0 0 8px rgba(0,0,0,0.7); /* opcional sombra */
     }
   </style>
 </head>
 <body>
 
-  <img src="OlaMin.jpeg" class="moved-image" alt="Imagen movida">
-
   <audio src="Musica.mpeg" autoplay loop></audio>
 
   <script>
-    const images = [
-      'OlaMin.jpeg',
-      'Algo.jpeg',
-      'Mensaje.jpeg'
-    ];
+    // Aquí el audio ya está en autoplay y loop
+    // Si quieres, puedes controlar el play con el clic:
 
-    let index = 0;
+    const audio = document.querySelector('audio');
     let audioStarted = false;
-    // No hace falta obtener el audio por id, ya que lo has declarado directamente en el body.
 
     document.body.addEventListener('click', () => {
       if (!audioStarted) {
-        audio.play().catch(err => console.log('No se pudo reproducir el audio:', err));
+        audio.play().catch(e => console.log('No se pudo reproducir audio:', e));
         audioStarted = true;
-      }
-
-      index++;
-      if (index < images.length) {
-        // Cambiamos la imagen movida (la que está en <img>)
-        document.querySelector('img.moved-image').src = images[index];
       }
     });
   </script>
